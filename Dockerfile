@@ -1,7 +1,7 @@
 # parameters
-ARG REPO_NAME="testgps"
-ARG DESCRIPTION="testing_the_gps"
-ARG MAINTAINER="Ethan (cool@google.org)"
+ARG REPO_NAME="nuc_container"
+ARG DESCRIPTION="Container meant to get Duckiebot location data and sent and array of all car locations to any Duckiebot subscribed to the LCM group"
+ARG MAINTAINER="Ethan Smith (esmit502@byu.edu)"
 # pick an icon from: https://fontawesome.com/v4.7.0/icons/
 ARG ICON="cube"
 
