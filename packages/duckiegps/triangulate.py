@@ -29,8 +29,9 @@ def scanner_loop(cam_num,tag_num):
            
 
 def scanner_thread(cam_num, matrix, results: Results):
-    cap = cv.VideoCapture(cam_num)
-    ret, frame = cap.read()
+    # cap = cv.VideoCapture(cam_num)
+    # ret, frame = cap.read()
+    frame = cv.imread('images/pic.jpg')
     fixed_tags = []
     detector = Detector(families="tagStandard41h12",nthreads=1,quad_decimate=1.0,quad_sigma=0.0,
                         refine_edges=1, decode_sharpening=0.25,searchpath=['apriltags'],debug=0)
