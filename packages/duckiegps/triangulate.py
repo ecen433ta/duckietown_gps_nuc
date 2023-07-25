@@ -28,10 +28,15 @@ def scanner_loop(cam_num,tag_num):
     return present, pose, fixed_tags
            
 
-def scanner_thread(cam_num, matrix, results: Results):
-    # cap = cv.VideoCapture(cam_num)
-    # ret, frame = cap.read()
-    frame = cv.imread('images/pic.jpg')
+def scanner_thread(camera, matrix, results: Results):
+    cap = cv.VideoCapture(camera)
+    ret, frame = cap.read()
+
+    camera_width = 1440
+    camera_height = 720
+    cap.set(cv.CAP_PROP_FRAME_WIDTH, camera_width)
+    cap.set(cv.CAP_PROP_FRAME_HEIGHT, camera_height)
+    #frame = cv.imread('images/pic.jpg')
     fixed_tags = []
     detector = Detector(families="tagStandard41h12",nthreads=1,quad_decimate=1.0,quad_sigma=0.0,
                         refine_edges=1, decode_sharpening=0.25,searchpath=['apriltags'],debug=0)
@@ -80,7 +85,10 @@ def final_locator(pose,tags):
 
 
 def triangulate():
-    RED,BLUE,GREEN,YELLOW = range(4)    
+    YELLOW = range(2)
+    GREEN = '/dev/video2'
+    BLUE = '/dev/video0'
+    RED = '/dev/video4'
 
     #Block of code for the threading of the 4 cameras
     threads = [None] * 4
