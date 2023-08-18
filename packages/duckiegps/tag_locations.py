@@ -1,21 +1,27 @@
+import numpy as np
+
 def return_fixed_loc(number):
-    if number == 112:
-        return 3.96,3.96
-    elif number == 113:
-        return 3.96,2.74
-    elif number == 114:
-        return 2.44,0.91
-    elif number == 115:
-        return 3.96,0.91
-    elif number == 116:
-        return 0.91,0.91
-    elif number == 117:
-        return 0.91,2.13
-    elif number == 118:
-        return 2.13,3.96
-    elif number == 119:
-        return 0.91,3.35
+    if number == 116: # visible by the blue camera
+        return np.matrix([[1,0,0,2.4384],
+                          [0,1,0,0.9144],
+                          [0,0,1,0],
+                          [0,0,0,1]])
+    elif number == 117: # visible by the green camera
+        return np.matrix([[1,0,0,0.9144],
+                          [0,1,0,2.1336],
+                          [0,0,1,0],
+                          [0,0,0,1]])
+    elif number == 118: # visible by the yellow camera
+        return np.matrix([[1,0,0,2.1336],
+                          [0,1,0,3.9624],
+                          [0,0,1,0],
+                          [0,0,0,1]])
+    elif number == 119: # visible by the red
+        return np.matrix([[1,0,0,3.9624],
+                          [0,1,0,3.9624],
+                          [0,0,1,0],
+                          [0,0,0,1]])
     else:
-        return 0,0
+        return None
         
 # Add all the fixed tags here

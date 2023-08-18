@@ -2,7 +2,7 @@ import cv2 as cv
 import time
 from dt_apriltags import Detector
 
-cap = cv.VideoCapture('/dev/video6')
+cap = cv.VideoCapture('/dev/video2')
 camera_width = 1200
 camera_height = 1000
 

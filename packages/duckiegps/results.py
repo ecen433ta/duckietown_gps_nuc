@@ -1,10 +1,9 @@
 class Results:
     def __init__(self):
-        self.car_tags = []
-        self.fixed_tags = []
-    def set_data(self,car_tags,fixed_tags):
-        self.car_tags = car_tags
-        self.fixed_tags = fixed_tags
+        self.location_array = []
+        self.has_car = False
+    def set_data(self,id,x,y):
+        self.location_array.append([float(id),float(x),float(y)])
 
 class Final_List:
     def __init__(self):
@@ -13,3 +12,13 @@ class Final_List:
         self.big_list.append(car_data)
     def get_cars(self):
         return self.big_list
+
+class Num_Matrix:
+    def __init__(self,number,matrix):
+        self.id = number
+        self.cam_car_matrix = matrix
+    def set_tag_car_matrix(self,matrix):
+        self.tag_car_matrix = matrix
+    # def set_location(self,x,y):
+    #     self.x = x
+    #     self.y = y
