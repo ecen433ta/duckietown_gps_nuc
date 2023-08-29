@@ -1,3 +1,9 @@
+"""
+This file uses a class to initialize all of the cameras that are connected to the NUC. This helps solve issues that were faced
+involving the first 2-3 captures from the cameras. The initialization in the class takes 2 dummy frams and discards them as garbage. The third
+frame and on are usable. This class is used in the actual GPS code.
+"""
+
 import cv2 as cv
 import numpy as np
 from dt_apriltags import Detector
@@ -30,8 +36,8 @@ class Caps:
         camera_height = 1000
         self.blue_cap.set(cv.CAP_PROP_FRAME_WIDTH, camera_width)
         self.blue_cap.set(cv.CAP_PROP_FRAME_HEIGHT, camera_height)
-        self.blue_cap.set(cv.CAP_PROP_BRIGHTNESS, -50)  # Set brightness to default (0) -64 to 64
-        self.blue_cap.set(cv.CAP_PROP_CONTRAST, 60)    # Set contrast to default (1) - 64 to 64
+        self.blue_cap.set(cv.CAP_PROP_BRIGHTNESS, -50)
+        self.blue_cap.set(cv.CAP_PROP_CONTRAST, 60)
 
         ret,frame = self.blue_cap.read()
         ret,frame = self.blue_cap.read()
