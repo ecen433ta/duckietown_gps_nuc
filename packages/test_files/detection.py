@@ -1,3 +1,5 @@
+# this is a simple file to detect april tags in images
+
 from dt_apriltags import Detector
 import cv2 as cv
 import argparse
@@ -5,7 +7,6 @@ import argparse
 detector = Detector(families="tagStandard41h12",nthreads=1,quad_decimate=1.0,quad_sigma=0.0,refine_edges=1,decode_sharpening=0.25, searchpath=['apriltags'],debug=0)
 
 yellow_matrix = [1004.1853533373741,1003.1103206081148,969.3279317187869,487.2596891135381]
-
 
 frame = cv.imread('derek_capture.jpg')
 

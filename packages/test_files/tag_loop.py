@@ -1,3 +1,7 @@
+"""
+This file will print out all the tag id numbers of apriltags seen by a given camera. It is useful for testing different tag types and lighting.
+"""
+
 import cv2 as cv
 import time
 from dt_apriltags import Detector

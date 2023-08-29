@@ -4,18 +4,9 @@ from dt_apriltags import Detector
 
 blue_matrix = [2012.2586482532602,2032.1612183033274,959.556055442904,539.4482475170423]
 yellow_matrix = [1004.1853533373741,1003.1103206081148,969.3279317187869,487.2596891135381]
-#green_matrix = [1013.2966272934505,1016.1119008162773,956.6841383491467,533.1213418047209]
 green_matrix = [952.93349542,950.89084502,955.39429755,526.05641969]
 red_matrix = [1257.0849187162933,1264.2959825648034,891.4609476376864,519.1376957263653]
-# homo_matrix = np.matrix([[365.0606947447434, 218.28541381501358, -532.0065484039008], 
-#                [-82.23039342913593, -215.68700056380126, 762.3389182665026], 
-#                [-0.20237709693536654, 0.5899059383750647, 1.0]])
-# homo_matrix = np.matrix([[0.004897115718951128, 0.002815387186983516, 0.5819875657582523],
-#                         [0.00037183860991343094, -0.0027194635136942153, 2.3718959166632203], 
-#                         [0.00039316264690368526, 0.001495563384097792, 0.99999999999]])
-# homo_matrix = np.matrix([[0.0038814415184870448, 0.001368478122676083, 0.8708150644897498], 
-#                          [0.00022875979127249323, -0.002807675728503122, 2.1795276807444974], 
-#                          [0.0002096139558681465, 0.0008147100714498736, 0.9999999999999999]])
+
 homo_matrix_blue = np.matrix([[0.003593820427807904, 0.0009335293647671857, 0.8838635335942813], 
                          [0.0001481422640947083, -0.0029053307712818503, 2.136444514595243], 
                          [0.0001643286416833784, 0.0004714120412393716, 1.0]])
@@ -34,7 +25,7 @@ homo_matrix_green = np.matrix([[-5.4122782681711266e-05, -0.002636313037765463, 
 
 class Caps:
     def __init__(self):
-        self.blue_cap = cv.VideoCapture('/dev/video2')
+        self.blue_cap = cv.VideoCapture('/dev/video0')
         camera_width = 1200
         camera_height = 1000
         self.blue_cap.set(cv.CAP_PROP_FRAME_WIDTH, camera_width)
@@ -45,7 +36,7 @@ class Caps:
         ret,frame = self.blue_cap.read()
         ret,frame = self.blue_cap.read()
 
-        self.red_cap = cv.VideoCapture('/dev/video4')
+        self.red_cap = cv.VideoCapture('/dev/video2')
         camera_width = 1200
         camera_height = 1000
         self.red_cap.set(cv.CAP_PROP_FRAME_WIDTH, camera_width)
@@ -55,7 +46,7 @@ class Caps:
         ret,frame = self.red_cap.read()
         ret,frame = self.red_cap.read()
 
-        self.yellow_cap = cv.VideoCapture('/dev/video0')
+        self.yellow_cap = cv.VideoCapture('/dev/video4')
         camera_width = 1200
         camera_height = 1000
         self.yellow_cap.set(cv.CAP_PROP_FRAME_WIDTH, camera_width)
@@ -83,10 +74,15 @@ detector = Detector(families="tagStandard41h12",nthreads=1,quad_decimate=1.0,qua
 
 for i in range(1):
     ret,frame = caps_object.green_cap.read()
-    print('capture')
+
+if ret == False:
+    print("Picture not acquired")
 
 gray = cv.cvtColor(frame,cv.COLOR_BGR2GRAY)
 tags = detector.detect(gray,estimate_tag_pose=False,camera_params=blue_matrix,tag_size=0.047)
+
+# Use this section of code to simply print the centers of each apriltag in the u,v plane for the homography calibration ---------------------------------------
+
 # for tag in tags:
 #     print(tag.tag_id)
 #     print(tag.center)
@@ -94,11 +90,14 @@ tags = detector.detect(gray,estimate_tag_pose=False,camera_params=blue_matrix,ta
 #     y=tag.center[1]
 #     cv.circle(frame,[int(x),int(y)],5,(0,0,255),3)
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# This section of code will use a generated homography matrix and do the necessary calculations to find correct x,y coordinates. Use it for testing homography results
 for tag in tags:
     tag_matrix = [[tag.center[0]],[tag.center[1]],[1]]
-    distance_matrix = np.matmul(homo_matrix_green,tag_matrix)
+    distance_matrix = np.matmul(homo_matrix_green ,tag_matrix)
     print(f"{tag.tag_id}:\n {distance_matrix[0,0]},{distance_matrix[1,0]},{distance_matrix[2,0]}")
     print(f"Normalized:\n{distance_matrix[0,0]/distance_matrix[2,0]},{distance_matrix[1,0]/distance_matrix[2,0]},{distance_matrix[2,0]/distance_matrix[2,0]}\n\n")
-
-cv.imwrite('objects.jpg',frame)
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+cv.imwrite('capture.jpg',frame)
 

@@ -1,5 +1,7 @@
 import numpy as np
 
+# These matricies, though no longer used, are the intrinsic parameters of each of the webcams
+
 blue_matrix = [2012.2586482532602,2032.1612183033274,959.556055442904,539.4482475170423]
 
 yellow_matrix = [1004.1853533373741,1003.1103206081148,969.3279317187869,487.2596891135381]
@@ -12,6 +14,8 @@ origin_matrix = np.matrix([[1,0,0,0],
                            [0,1,0,0],
                            [0,0,1,0],
                            [0,0,0,1]])
+
+# These are the matricies currently used for the homography calculation
 
 homo_matrix_blue = np.matrix([[0.003593820427807904, 0.0009335293647671857, 0.8838635335942813], 
                          [0.0001481422640947083, -0.0029053307712818503, 2.136444514595243], 

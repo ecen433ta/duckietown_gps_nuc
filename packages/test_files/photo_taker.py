@@ -1,7 +1,7 @@
 import cv2 as cv
 import time
 
-cap = cv.VideoCapture('/dev/video2')
+cap = cv.VideoCapture('/dev/video0')
 camera_width = 2560 #1000
 camera_height = 1440 #600
 

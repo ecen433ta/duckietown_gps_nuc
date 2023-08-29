@@ -12,13 +12,3 @@ class Final_List:
         self.big_list.append(car_data)
     def get_cars(self):
         return self.big_list
-
-class Num_Matrix:
-    def __init__(self,number,matrix):
-        self.id = number
-        self.cam_car_matrix = matrix
-    def set_tag_car_matrix(self,matrix):
-        self.tag_car_matrix = matrix
-    # def set_location(self,x,y):
-    #     self.x = x
-    #     self.y = y

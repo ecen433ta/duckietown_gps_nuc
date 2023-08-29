@@ -10,8 +10,8 @@ message = Float32MultiArray()
 caps = Caps()
 
 # set up the layout for the multi-dimensional array
-x = 0
-while(x<1):
+
+while(True):
     twod_array=triangulate(caps) # get the list of things from the triangulate function
 
     # flatten the array
@@ -32,5 +32,4 @@ while(x<1):
     # publish the message
     publisher.publish(message)
     print(message.data)
-    x = x + 1
 

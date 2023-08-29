@@ -1,47 +1,41 @@
-# Template: template-ros
+# Duckietown GPS
 
-This template provides a boilerplate repository
-for developing ROS-based software in Duckietown.
+This is the code to create the container for the GPS system to be used by the duckiebots. This container is specifically made to be used on the NUC that connects to all the cameras. The program uses homographies to transform coordinates from the camera's view plane to the real-world plane. A list of all detected Apriltags is published in a sequence that follows: id number - x position - y position. This list is sent to the Duckiebots over LCM using the dt-communications-utils library. The list is parsed by the code in the duckiebots.
 
-**NOTE:** If you want to develop software that does not use
-ROS, check out [this template](https://github.com/duckietown/template-basic).
+This repo was based on the duckietown repo found [here](https://github.com/duckietown/template-ros).
 
+**WARNING**
+If any of the cameras are moved at all, the homography for the camera will need to be recalibrated.
 
 ## How to use it
 
-### 1. Fork this repository
+### 1. Clone Repository
 
-Use the fork button in the top-right corner of the github page to fork this template repository.
+Clone this repository onto the NUC, which can be accessed via ssh.
+
+### 2. Build the image
+
+Build the gps image by running ```dts devel build -f``` from the top directory of the repository.
+
+### 3. Run the image
+
+To start the container, run the command:
+```docker run -it --network host --device /dev/video0 --device /dev/video2 --device /dev/video4 --device /dev/video6 [CONTAINER ID] bash```
+where CONTAINER_ID is the ID number displayed by the container when you run the command ```docker ps```.
+
+### 4. Run the GPS program
+
+Running the 'docker run' command in step 3 will start the image and put you into the terminal. To start the program, use:
+```python3 packages/duckiegps/publisher.py```
+
+The program will start to run and print out all the detected Apriltags with their x,y coordinates to the console. If the progam ends abruptly with a
+'segmentation fault' error, then simple end and restart the program. It should work just fine after the first restart if the problem arises. If there is a segmentaton fault, it will be within the first 10-15 seconds of program start.
 
 
-### 2. Create a new repository
+## Test files
 
-Create a new repository on github.com while
-specifying the newly forked template repository as
-a template for your new repository.
+The folder 'test_files' that is located right next to the 'duckiegps' directory contains a few files that are used for testing the cameras and data, as well as making the homography matrices. Short descriptions of the files and their functions are in the heading of each file.
 
+## Camera settings
 
-### 3. Define dependencies
-
-List the dependencies in the files `dependencies-apt.txt` and
-`dependencies-py3.txt` (apt packages and pip packages respectively).
-
-
-### 4. Place your code
-
-Place your code in the directory `/packages/` of
-your new repository.
-
-
-### 5. Setup launchers
-
-The directory `/launchers` can contain as many launchers (launching scripts)
-as you want. A default launcher called `default.sh` must always be present.
-
-If you create an executable script (i.e., a file with a valid shebang statement)
-a launcher will be created for it. For example, the script file 
-`/launchers/my-launcher.sh` will be available inside the Docker image as the binary
-`dt-launcher-my-launcher`.
-
-When launching a new container, you can simply provide `dt-launcher-my-launcher` as
-command.
+All 4 of the webcams are to be set using udev rules for the device that they are on. If the rules are changed for one reason or another, and the cameras are no longer /dev/video0, /dev/video2, /dev/video4, and /dev/video6, then the input will have to be changed for the capture method in the cap_object.py file.
