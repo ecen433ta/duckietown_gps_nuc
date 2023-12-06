@@ -21,7 +21,7 @@ Build the gps image by running ```dts devel build -f``` from the top directory o
 
 To start the container, run the command:
 ```docker run -it --network host --device /dev/video0 --device /dev/video2 --device /dev/video4 --device /dev/video6 [CONTAINER ID] bash```
-where CONTAINER_ID is the ID number displayed by the container when you run the command ```docker ps```.
+where CONTAINER_ID is the ID number displayed by the container when you run the command ```docker image ls```.
 
 ### 4. Run the GPS program
 
