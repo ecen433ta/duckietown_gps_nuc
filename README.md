@@ -15,7 +15,7 @@ Clone this repository onto the NUC, which can be accessed via ssh.
 
 ### 2. Build the image
 
-Build the gps image by running ```dts devel build -f``` from the top directory of the repository.
+Build the gps image by running ```dts devel build -f``` from the top directory of the repository if the container needs to be updated or has not yet been built.
 
 ### 3. Run the image
 
