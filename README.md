@@ -11,7 +11,7 @@ If any of the cameras are moved at all, the homography for the camera will need 
 
 ### 1. Clone Repository
 
-Clone this repository onto the NUC, which can be accessed via ssh.
+Clone this repository onto the NUC, which can be accessed via ssh.IP address should be control@192.168.1.136
 
 ### 2. Build the image
 
